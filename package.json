@@ -1,0 +1,19 @@
+{
+  "name": "name-image-search",
+  "version": "0.0.1",
+  "description": "A prototype of a name image search engine against collections in the State Library of NSW",
+  "main": "lambdaHandler.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slnsw/dxlab-young-ct-award.git"
+  },
+  "author": "Vignesh Sankaran",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/slnsw/dxlab-young-ct-award/issues"
+  },
+  "homepage": "https://github.com/slnsw/dxlab-young-ct-award#readme",
+  "dependencies": {
+    "aws-sdk": "2.205.0"
+  }
+}

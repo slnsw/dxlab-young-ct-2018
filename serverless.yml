@@ -1,0 +1,29 @@
+service: name-image-search
+
+frameworkVersion: ""
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  memorySize: 512
+  timeout: 5
+  stage: dev
+  region: ap-southeast-2
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "*"
+    - Effect: Allow
+        Action:
+        - "rekognition:*"
+      Resource: "*"
+
+functions:
+  nameSearch:
+    handler: handler.nameSearch
+    events:
+      - http:
+        path: namesearch
+        method: get
