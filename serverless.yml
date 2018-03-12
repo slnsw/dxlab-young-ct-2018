@@ -22,8 +22,8 @@ provider:
 
 functions:
   nameSearch:
-    handler: handler.nameSearch
+    handler: handler.facialAnalysis
     events:
       - http:
-        path: namesearch
+        path: facialanalysis
         method: get
