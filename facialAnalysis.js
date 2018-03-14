@@ -9,7 +9,7 @@ class FacialAnalysis {
     static listFaces() {
         const s3Params = {
             Bucket: "samhood",
-            MaxKeys: 3
+            MaxKeys: 8
         };
 
         return new Promise((resolve, reject) => {
