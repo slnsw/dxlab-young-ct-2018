@@ -6,6 +6,7 @@
   "author": "Vignesh Sankaran <developer@sankaran.io>",
   "license": "MIT",
   "devDependencies": {
-    "aws-sdk": "^2.211.0"
+    "aws-sdk": "^2.211.0",
+    "serverless-jest-plugin": "^0.1.6"
   }
 }

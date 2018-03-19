@@ -19,11 +19,12 @@ provider:
       Action:
         - "rekognition:*"
       Resource: "*"
-
+plugin:
+  - serverless-jest-plugin
 functions:
   listImages:
-    handler: endpoints.listImages
+    handler: endpoints.addImagesToCollection
     events:
       -http:
-        path: listImages
-        method: get
+        path: addImagesToCollection
+        method: post
