@@ -1,0 +1,13 @@
+{
+  "name": "iat-back",
+  "version": "0.0.1",
+  "description": "Backend for Internal Automation Tool",
+  "main": "endpoints.js",
+  "author": "Vignesh Sankaran <developer@sankaran.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "aws-sdk": "^2.211.0",
+    "serverless-jest-plugin": "^0.1.6",
+    "serverless-offline": "^3.18.0"
+  }
+}

@@ -1,15 +1,13 @@
 'use strict';
 
-const FacialAnalysis = require("./facialAnalysis.js");
+const Rekognition = require("./rekognition.js");
 
-module.exports.facialAnalysis = (event, context, callback) => {
-    // Provide an endpoint to the facial analysis endpiont
-    return FacialAnalysis.listFaces().then((data) => {
+module.exports.rekognition = (event, context, callback) => {
+    return Rekognition.addImagesToCollection(event).then(() => {
         const response = {
             isBase64Encoded: false,
-            statusCode: 200,
-            body: JSON.stringify(data)
-        }
+            statusCode: 200
+        };
         callback(null, response);
     })
     .catch((error) => {
