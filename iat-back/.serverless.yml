@@ -1,6 +1,7 @@
 service: iat-back
 
-frameworkVersion: ">1.10.0"
+plugins:
+  - serverless-jest-plugin
 
 provider:
   name: aws
@@ -19,12 +20,11 @@ provider:
       Action:
         - "rekognition:*"
       Resource: "*"
-plugin:
-  - serverless-jest-plugin
+
 functions:
   listImages:
     handler: endpoints.addImagesToCollection
     events:
-      -http:
+      - http:
         path: addImagesToCollection
         method: post
