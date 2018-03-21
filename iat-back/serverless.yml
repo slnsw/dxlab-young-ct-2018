@@ -1,4 +1,6 @@
-service: iat-back
+service: name-image-search
+
+frameworkVersion: ">=1.10.0"
 
 plugins:
   - serverless-jest-plugin
@@ -6,8 +8,8 @@ plugins:
 provider:
   name: aws
   runtime: nodejs6.10
-  memorySize: 1024
-  timeout: 20
+  memorySize: 512
+  timeout: 10
   stage: dev
   region: ap-southeast-2
 
@@ -22,9 +24,9 @@ provider:
       Resource: "*"
 
 functions:
-  listImages:
-    handler: endpoints.addImagesToCollection
+  facialAnalysis:
+    handler: lambdaHandler.facialAnalysis
     events:
       - http:
-        path: addImagesToCollection
-        method: post
+          path: facialAnalysis
+          method: get
