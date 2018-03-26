@@ -1,8 +1,8 @@
 'use strict';
 
 const AWS = require("aws-sdk");
-const s3 = AWS.S3();
-const rek = AWS.Rekognition();
+const s3 = new AWS.S3();
+const rek = new AWS.Rekognition();
 
 class Rekognition {
     static addImagesToCollection(params) {
