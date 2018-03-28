@@ -12,6 +12,7 @@
     "aws-sdk": "^2.211.0",
     "jest": "^22.4.3",
     "serverless-jest-plugin": "^0.1.6",
-    "serverless-offline": "^3.18.0"
+    "serverless-offline": "^3.18.0",
+    "util.promisify": "^1.0.0"
   }
 }
