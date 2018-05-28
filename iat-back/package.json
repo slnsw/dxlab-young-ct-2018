@@ -6,11 +6,12 @@
   "author": "Vignesh Sankaran <developer@sankaran.io>",
   "license": "MIT",
   "scripts": {
-    "test": "node ./node_modules/.bin/jest --forceExit --runInBand"
+    "test": "node ./node_modules/.bin/jest --forceExit --runInBand",
+    "test-windows": "node ./node_modules/jest/bin/jest.js --runInBand"
   },
   "devDependencies": {
     "aws-sdk": "^2.211.0",
-    "jest": "^22.4.3",
+    "jest": "*",
     "serverless-jest-plugin": "^0.1.6",
     "serverless-offline": "^3.18.0",
     "util.promisify": "^1.0.0"
