@@ -1,0 +1,15 @@
+{
+  "name": "rekognition-init",
+  "version": "0.0.1",
+  "description": "Run AWS Rekognition against images in an S3 bucket and store the output in individual JSON files for each image",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node script.js"
+  },
+  "author": "Vignesh Sankaran <vignesh.sankaran@sl.nsw.gov.au>",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.250.1"
+  }
+}
