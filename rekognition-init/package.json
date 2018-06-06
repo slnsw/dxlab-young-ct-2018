@@ -4,8 +4,8 @@
   "description": "Run AWS Rekognition against images in an S3 bucket and store the output in individual JSON files for each image",
   "main": "script.js",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch --runInBand",
     "start": "node ./script.js"
   },
   "author": "Vignesh Sankaran <vignesh.sankaran@sl.nsw.gov.au>",

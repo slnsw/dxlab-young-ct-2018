@@ -5,12 +5,10 @@ AWS.config.update({ region: "ap-southeast-2" });
 var s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 var rekognition = new AWS.Rekognition({ apiVersion: "2016-06-27" });
 
-var bucketParams = {
-  Bucket: "samhood"
-};
-
-async function imageList() {
+async function imageList(bucketName) {
   try {
+    var bucketParams = {};
+    bucketParams["Bucket"] = bucketName;
     const s3Promise = s3.listObjects(bucketParams).promise();
     const promiseResult = await s3Promise;
     var imageNameArray = [];
@@ -19,11 +17,10 @@ async function imageList() {
       // To do: Check if the object name contains .jpeg or .png
       imageNameArray.push(promiseResult.Contents[i].Key);
     }
+    console.log(imageNameArray);
     return imageNameArray;
-    // console.log(imageNameArray);
   } catch (e) {
     console.log(e);
-    process.exit(1);
   }
 }
 
@@ -61,9 +58,7 @@ async function createSamHoodFaceCollection() {
       .promise();
     let _ = await createCollectionPromise;
   } catch (e) {
-    // if (e.code === "ResourceAlreadyExistsException") {
-    //   return;
-    // }
+    console.log(e);
   }
 }
 
@@ -71,7 +66,5 @@ async function createSamHoodFaceCollection() {
 // onto S3
 
 module.exports = {
-  imageList,
-  checkFaceCollectionExists,
-  createSamHoodFaceCollection
+  imageList
 };
