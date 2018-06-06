@@ -9,8 +9,7 @@ async function imageList(bucketName) {
   try {
     var bucketParams = {};
     bucketParams["Bucket"] = bucketName;
-    const s3Promise = s3.listObjects(bucketParams).promise();
-    const promiseResult = await s3Promise;
+    const promiseResult = await s3.listObjects(bucketParams).promise();
     var imageNameArray = [];
     // Create an array of image names
     for (var i = 0; i < promiseResult.Contents.length; i++) {
@@ -26,10 +25,7 @@ async function imageList(bucketName) {
 // put images into collection, if collection doesn't exist create it
 async function checkFaceCollectionExists(faceCollectionName) {
   try {
-    const rekognitionCollectionPromise = rekognition
-      .listCollections({})
-      .promise();
-    const result = await rekognitionCollectionPromise;
+    const result = await rekognition.listCollections({}).promise();
 
     if (result.CollectionIds.length === 0) {
       return false;
