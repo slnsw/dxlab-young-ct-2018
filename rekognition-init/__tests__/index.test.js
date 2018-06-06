@@ -97,7 +97,16 @@ describe("createRekognitionCollection", () => {
 });
 
 describe("saveImageFacesData", () => {
-  it("should save indexFaces() call for each image into a JSON file in S3", async () => {
-    const result = await script.indexFaces("samhood", "hood_00101r.jpg");
+  it("should save Rekognition indexFaces() call for each image into a JSON file in S3", async () => {
+    // Initially aim to return JSON blob from the function, console.log() it
+    // Pass in the list of images
+    const imageList = ["hood_00101r.jpg"];
+    const result = await script.indexFacesToCollection(
+      mockRekognitionFaceCollection,
+      mockBucketName,
+      imageList
+    );
+
+    expect(result).toBeInstanceOf(Object);
   });
 });

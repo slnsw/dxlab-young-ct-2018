@@ -59,9 +59,33 @@ async function createRekognitionFaceCollection(collectionName) {
 
 // store the output of indexFaces() into a JSON file and put the file
 // onto S3
+async function indexFacesToCollection(
+  rekognitionCollection,
+  bucketName,
+  imageList
+) {
+  var result = [];
+  for (var i = 0; i < imageList.length; i++) {
+    var params = {
+      CollectionId: rekognitionCollection,
+      DetectionAttributes: [],
+      ExternalImageId: imageList[i],
+      Image: {
+        S3Object: {
+          Bucket: bucketName,
+          Name: imageList[i]
+        }
+      }
+    };
+    const json = await rekognition.indexFaces(params).promise();
+    result.push(json);
+  }
+  return result;
+}
 
 module.exports = {
   imageList,
   checkFaceCollectionExists,
-  createRekognitionFaceCollection
+  createRekognitionFaceCollection,
+  indexFacesToCollection
 };
