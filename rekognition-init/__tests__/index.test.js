@@ -109,14 +109,15 @@ describe("saveImageFacesData", () => {
 
     // Check if each image file has a JSON file associated with it
     for (var i = 0; i < result.length; i++) {
-      // To do: find a neater way to get a substring prior to the .
+      // To do: find a neater way to get a substring prior to the full stop
       const imageName = imageList[i].split(".")[0];
       // Get list of objects in S3
       const s3Params = {
         Bucket: mockBucketName
       };
       const s3Result = await s3.listObjectsV2(s3Params).promise();
-      expect(s3Result.Contents.indexOf(imageName + ".json")).not.toEqual(-1);
+      const expectedImageName = imageName + ".json";
+      expect(s3Result.Contents.indexOf(expectedImageName)).not.toEqual(-1);
     }
   });
 });

@@ -82,7 +82,7 @@ async function indexFacesToCollection(
       const json = await rekognition.indexFaces(params).promise();
       // To do: Find a way to do this that won't fail if the file name has a full
       // stop in it.
-      const jsonFileName = imageList[i].split(".")[0];
+      const jsonFileName = imageList[i].split(".")[0] + ".json";
       const uploadParams = {
         Bucket: bucketName,
         Key: jsonFileName,
