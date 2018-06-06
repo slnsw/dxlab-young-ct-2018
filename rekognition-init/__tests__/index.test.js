@@ -64,8 +64,10 @@ describe("s3", () => {
 
 describe("checkRekognitionCollections", () => {
   it("should check if sam hood face collection exists", async () => {
-    const result = await script.checkFaceCollectionExists();
-    expect(result).toBeDefined();
+    const result = await script.checkFaceCollectionExists(
+      mockRekognitionFaceCollection
+    );
+    expect(result).toEqual(false);
   });
 });
 

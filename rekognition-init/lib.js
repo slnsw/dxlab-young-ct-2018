@@ -25,7 +25,7 @@ async function imageList(bucketName) {
 }
 
 // put images into collection, if collection doesn't exist create it
-async function checkFaceCollectionExists() {
+async function checkFaceCollectionExists(faceCollectionName) {
   try {
     const rekognitionCollectionPromise = rekognition
       .listCollections({})
@@ -36,7 +36,7 @@ async function checkFaceCollectionExists() {
       return false;
     }
     for (var i = 0; i < result.CollectionIds.Length; i++) {
-      if (result.CollectionIds[i] == "samhoodfaces") {
+      if (result.CollectionIds[i] == faceCollectionName) {
         return true;
       }
     }
@@ -66,5 +66,6 @@ async function createSamHoodFaceCollection() {
 // onto S3
 
 module.exports = {
-  imageList
+  imageList,
+  checkFaceCollectionExists
 };
