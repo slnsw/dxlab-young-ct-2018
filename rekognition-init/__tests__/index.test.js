@@ -4,6 +4,7 @@ const script = require("../lib");
 
 aws.config.update({ region: "ap-southeast-2" });
 var s3 = new aws.S3({ apiVersion: "2006-03-01" });
+var rekognition = new aws.Rekognition({ apiVersion: "2016-06-27" });
 
 const mockBucketName = "dxlablivetesting";
 const mockRekognitionFaceCollection = "mockCollection";
@@ -29,7 +30,6 @@ beforeAll(async done => {
   uploadImageToBucketParams["Body"] = buffer;
 
   const uploadResult = await s3.upload(uploadImageToBucketParams).promise();
-  console.log(uploadResult);
 
   done();
 });
@@ -53,6 +53,13 @@ afterAll(async () => {
   await s3.deleteBucket(deleteBucketParams).promise();
 
   // Delete mock Rekognition face collection
+  const deleteRekognitionFaceCollectionParams = {
+    CollectionId: mockRekognitionFaceCollection
+  };
+
+  await rekognition
+    .deleteCollection(deleteRekognitionFaceCollectionParams)
+    .promise();
 });
 describe("s3", () => {
   it("should return list of objects", async () => {
@@ -73,9 +80,19 @@ describe("checkRekognitionCollections", () => {
 
 describe("createRekognitionCollection", () => {
   it("should attempt creation of Rekognition face collection", async () => {
-    const result = await script.createSamHoodFaceCollection();
+    const result = await script.createRekognitionFaceCollection(
+      mockRekognitionFaceCollection
+    );
     expect(result).toBeUndefined();
-    // Add test for when collection already exists, should expect an exception e
+
+    // Test that the Rekognition face collection has been created
+    const listCollectionsResult = await rekognition
+      .listCollections({})
+      .promise();
+
+    expect(
+      listCollectionsResult.CollectionIds.indexOf(mockRekognitionFaceCollection)
+    ).not.toBe(-1);
   });
 });
 

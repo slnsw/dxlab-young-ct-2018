@@ -17,7 +17,6 @@ async function imageList(bucketName) {
       // To do: Check if the object name contains .jpeg or .png
       imageNameArray.push(promiseResult.Contents[i].Key);
     }
-    console.log(imageNameArray);
     return imageNameArray;
   } catch (e) {
     console.log(e);
@@ -47,10 +46,10 @@ async function checkFaceCollectionExists(faceCollectionName) {
   }
 }
 
-async function createSamHoodFaceCollection() {
+async function createRekognitionFaceCollection(collectionName) {
   try {
     var collectionParams = {
-      CollectionId: "samhoodfaces"
+      CollectionId: collectionName
     };
 
     var createCollectionPromise = rekognition
@@ -67,5 +66,6 @@ async function createSamHoodFaceCollection() {
 
 module.exports = {
   imageList,
-  checkFaceCollectionExists
+  checkFaceCollectionExists,
+  createRekognitionFaceCollection
 };
