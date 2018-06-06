@@ -9,6 +9,7 @@ async function imageList(bucketName) {
   try {
     var bucketParams = {};
     bucketParams["Bucket"] = bucketName;
+    // To do: Update this to listObjectsV2
     const promiseResult = await s3.listObjects(bucketParams).promise();
     var imageNameArray = [];
     // Create an array of image names
@@ -64,23 +65,35 @@ async function indexFacesToCollection(
   bucketName,
   imageList
 ) {
-  var result = [];
-  for (var i = 0; i < imageList.length; i++) {
-    var params = {
-      CollectionId: rekognitionCollection,
-      DetectionAttributes: [],
-      ExternalImageId: imageList[i],
-      Image: {
-        S3Object: {
-          Bucket: bucketName,
-          Name: imageList[i]
+  try {
+    var result = [];
+    for (var i = 0; i < imageList.length; i++) {
+      var params = {
+        CollectionId: rekognitionCollection,
+        DetectionAttributes: [],
+        ExternalImageId: imageList[i],
+        Image: {
+          S3Object: {
+            Bucket: bucketName,
+            Name: imageList[i]
+          }
         }
-      }
-    };
-    const json = await rekognition.indexFaces(params).promise();
-    result.push(json);
+      };
+      const json = await rekognition.indexFaces(params).promise();
+      // To do: Find a way to do this that won't fail if the file name has a full
+      // stop in it.
+      const jsonFileName = imageList[i].split(".")[0];
+      const uploadParams = {
+        Bucket: bucketName,
+        Key: jsonFileName,
+        Body: JSON.stringify(json)
+      };
+      await s3.upload(uploadParams).promise();
+    }
+    return result;
+  } catch (e) {
+    console.log(e);
   }
-  return result;
 }
 
 module.exports = {
