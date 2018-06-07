@@ -1,0 +1,18 @@
+{
+  "name": "imageservice",
+  "version": "0.0.1",
+  "description": "Backend for facial recognition tool",
+  "main": "handler.js",
+  "scripts": {
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch --runInBand"
+  },
+  "author": "Vignesh Sankaran <developer@sankaran.io>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.250.1"
+  },
+  "devDependencies": {
+    "jest": "^23.1.0"
+  }
+}
