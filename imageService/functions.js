@@ -21,7 +21,7 @@ async function images(bucketName) {
       }
 
       // Return JSON array of images in S3
-      resolve(JSON.stringify(imageList));
+      resolve(imageList);
     } catch (e) {
       reject(e);
     }
