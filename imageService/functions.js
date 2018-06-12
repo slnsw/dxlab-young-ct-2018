@@ -12,10 +12,15 @@ async function images(bucketName) {
       };
 
       const result = await s3.listObjectsV2(s3Params).promise();
-      resolve(result);
+      var imageList = [];
       // Put keys into an array
+      for (const item of result.Contents) {
+        imageList.push(item.Key);
+      }
       // Filter for .jpg .png images
       // Return JSON array of images in S3
+
+      resolve(JSON.stringify(imageList));
     } catch (e) {
       reject(e);
     }

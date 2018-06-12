@@ -31,7 +31,6 @@ beforeAll(async () => {
         Body: fileBuffer
       })
       .promise();
-    console.log(result);
   }
 });
 
@@ -60,7 +59,8 @@ afterAll(async () => {
 describe("functions", async () => {
   it("should list images in an S3 bucket", async () => {
     const result = await functions.images(mockBucket);
-    console.log(result);
-    expect(result.Contents.length).toBe(2);
+    const array = JSON.parse(result);
+    console.log(array);
+    expect(array.length).toBe(2);
   });
 });
