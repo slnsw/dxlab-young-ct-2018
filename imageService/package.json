@@ -10,9 +10,10 @@
   "author": "Vignesh Sankaran <developer@sankaran.io>",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.250.1"
+    "aws-sdk": "^2.255.1"
   },
   "devDependencies": {
+    "async": "^2.6.1",
     "jest": "^23.1.0"
   }
 }

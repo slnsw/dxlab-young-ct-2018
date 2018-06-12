@@ -16,36 +16,23 @@ beforeAll(async () => {
       LocationConstraint: "ap-southeast-2"
     }
   };
-
   await s3.createBucket(mockBucketParams).promise();
 
-  // Add all items in mockItems folder to S3 bucket
-  const folderPath = path.join(__dirname, "./mockItems");
+  const mockFolderPath = path.join(__dirname, "./mockItems");
+  const files = fs.readdirSync(mockFolderPath);
 
-  fs.readdir(folderPath, (e, files) => {
-    if (e) {
-      console.log(e);
-      throw e;
-    }
-    for (const file in files) {
-      const filePath = path.join(mockFolderPath, file);
-
-      fs.readFile(filePath, async (e, fileContents) => {
-        if (e) {
-          console.log(e);
-          throw e;
-        }
-
-        await s3
-          .upload({
-            Bucket: mockBucket,
-            Key: fileName,
-            Buffer: fileContents
-          })
-          .promise();
-      });
-    }
-  });
+  for (const file of files) {
+    const filePath = path.join(mockFolderPath, file);
+    const fileBuffer = fs.readFileSync(filePath);
+    const result = await s3
+      .upload({
+        Bucket: mockBucket,
+        Key: file,
+        Body: fileBuffer
+      })
+      .promise();
+    console.log(result);
+  }
 });
 
 afterAll(async () => {
@@ -53,11 +40,12 @@ afterAll(async () => {
   var getBucketObjectsParams = {
     Bucket: mockBucket
   };
+
   const result = await s3.listObjectsV2(getBucketObjectsParams).promise();
 
   for (var i = 0; i < result.Contents.length; i++) {
     await s3
-      .deleteObject({ Bucket: mockBucketName, Key: result.Contents[i].Key })
+      .deleteObject({ Bucket: mockBucket, Key: result.Contents[i].Key })
       .promise();
   }
 
@@ -70,5 +58,9 @@ afterAll(async () => {
 });
 
 describe("functions", async () => {
-  it("should list images in an S3 bucket", async () => {});
+  it("should list images in an S3 bucket", async () => {
+    const result = await functions.images(mockBucket);
+    console.log(result);
+    expect(result.Contents.length).toBe(2);
+  });
 });
