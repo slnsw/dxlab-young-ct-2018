@@ -15,11 +15,12 @@ async function images(bucketName) {
       var imageList = [];
       // Put keys into an array
       for (const item of result.Contents) {
-        imageList.push(item.Key);
+        if (item.Key.match(/.(jpg|jpeg|png)$/i)) {
+          imageList.push(item.Key);
+        }
       }
-      // Filter for .jpg .png images
-      // Return JSON array of images in S3
 
+      // Return JSON array of images in S3
       resolve(JSON.stringify(imageList));
     } catch (e) {
       reject(e);

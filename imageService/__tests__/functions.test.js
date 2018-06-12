@@ -25,7 +25,7 @@ describe("functions", async () => {
     for (const file of files) {
       const filePath = path.join(mockFolderPath, file);
       const fileBuffer = fs.readFileSync(filePath);
-      const result = await s3
+      await s3
         .upload({
           Bucket: mockBucket,
           Key: file,
