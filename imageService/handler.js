@@ -2,14 +2,24 @@
 
 const functions = require("./functions");
 
-module.exports.hello = (event, context, callback) => {
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: "Go Serverless v1.0! Your function executed successfully!",
-      input: event
+module.exports.images = (async, context, callback) => {
+  return functions
+    .images("samhood")
+    .then(result => {
+      const response = {
+        isBase64Encoded: false,
+        statusCode: 200,
+        headers: {},
+        body: JSON.stringify(result)
+      };
+      callback(null, response);
     })
-  };
+    .catch(e => {
+      const error = {
+        statusCode: 501,
+        body: e.message
+      };
 
-  callback(null, response);
+      callback(null, error);
+    });
 };
