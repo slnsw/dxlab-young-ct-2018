@@ -13,7 +13,6 @@
     "aws-sdk": "^2.255.1"
   },
   "devDependencies": {
-    "async": "^2.6.1",
     "jest": "^23.1.0"
   }
 }
