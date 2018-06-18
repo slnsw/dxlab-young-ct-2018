@@ -12,11 +12,14 @@ class Image extends Component {
   }
   render() {
     return (
-      <img
-        src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${
-          this.props.imageName
-        }`}
-      />
+      <div>
+        <h1>{this.props.imageName}</h1>
+        <img
+          src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${
+            this.props.imageName
+          }`}
+        />
+      </div>
     );
   }
 }
