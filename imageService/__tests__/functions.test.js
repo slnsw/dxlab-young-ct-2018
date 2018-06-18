@@ -61,4 +61,15 @@ describe("functions", async () => {
     const result = await functions.images(mockBucket);
     expect(result.length).toBe(2);
   });
+
+  it("should return image with metadata", async () => {
+    const request = {
+      bucket: mockBucket,
+      image: "hood_00101r.jpg"
+    };
+    const result = await functions.image(request);
+
+    expect("image" in result).toBe(true);
+    expect("metadata" in result).toBe(true);
+  });
 });

@@ -28,6 +28,38 @@ async function images(bucketName) {
   });
 }
 
+async function image(request) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // Do an S3 request looking for image and corresponding JSON file
+      const getImageBlobParams = {
+        Bucket: request.bucket,
+        Key: request.image
+      };
+
+      const imageResult = await s3.getObject(getImageBlobParams).promise();
+
+      const imageJson = request.image.replace(/\.[^/.]+$/, "") + ".json";
+      const getImageJsonParams = {
+        Bucket: request.bucket,
+        Key: imageJson
+      };
+
+      const imageJsonResult = await s3.getObject(getImageJsonParams).promise();
+
+      var resultJson = {};
+      resultJson["image"] = imageResult.Body;
+      resultJson["metadata"] = imageJsonResult.Body.toString();
+
+      // Create object based on results of JSON
+      resolve(resultJson);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 module.exports = {
-  images
+  images,
+  image
 };
