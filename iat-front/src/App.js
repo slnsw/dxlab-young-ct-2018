@@ -1,23 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import Image from './Image';
-import './App.css';
+import React, { Component } from "react";
+import axios from "axios";
+
+import Image from "./Image";
+import "./App.css";
 
 class App extends Component {
+  state = { images: [] };
+  async componentDidMount() {
+    const { data } = await axios.get(
+      "https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/images"
+    );
+    this.setState({ images: data.body });
+  }
   render() {
+    const imageName = window.location.search.replace("?image=", "");
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p className="App-intro">
-          This is more content that has been added.
-        </p>
-        <Image></Image>
+        {imageName ? (
+          <Image imageName={imageName} />
+        ) : (
+          this.state.images.map(image => {
+            return (
+              <a href={`?image=${image}`} key={image}>
+                <img
+                  src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${image}`}
+                />
+              </a>
+            );
+          })
+        )}
       </div>
     );
   }

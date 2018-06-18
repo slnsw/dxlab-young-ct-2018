@@ -25,6 +25,7 @@ functions:
       - http:
           integration: lambda
           path: images
+          cors: true
           method: get
   image:
     handler: handler.image
@@ -33,6 +34,7 @@ functions:
           integration: lambda
           path: images/{filename}
           method: get
+          cors: true
           request:
             paramaters:
               paths:

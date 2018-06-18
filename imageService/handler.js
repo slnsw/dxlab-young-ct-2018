@@ -10,7 +10,7 @@ module.exports.images = (event, context, callback) => {
         isBase64Encoded: false,
         statusCode: 200,
         headers: {},
-        body: JSON.stringify(result)
+        body: result
       };
       callback(null, response);
     })
