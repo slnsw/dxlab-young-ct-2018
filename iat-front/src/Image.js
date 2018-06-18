@@ -14,6 +14,9 @@ class Image extends Component {
     return (
       <React.Fragment>
         <h1>{this.props.imageName}</h1>
+        <p>
+          <a href="http://localhost:3000">Return to index page</a>
+        </p>
         <img
           src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${
             this.props.imageName
