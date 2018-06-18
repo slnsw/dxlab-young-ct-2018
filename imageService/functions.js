@@ -31,14 +31,6 @@ async function images(bucketName) {
 async function image(bucketName, imageName) {
   return new Promise(async (resolve, reject) => {
     try {
-      // Do an S3 request looking for image and corresponding JSON file
-      const getImageBlobParams = {
-        Bucket: bucketName,
-        Key: imageName
-      };
-
-      const imageResult = await s3.getObject(getImageBlobParams).promise();
-
       // Replace image file extension with json extension to retrieve
       // the image's metadata.
       const imageJson = imageName.replace(/\.[^/.]+$/, "") + ".json";
@@ -49,12 +41,9 @@ async function image(bucketName, imageName) {
 
       const imageJsonResult = await s3.getObject(getImageJsonParams).promise();
 
-      var resultJson = {};
-      resultJson["image"] = imageResult.Body;
-      resultJson["metadata"] = imageJsonResult.Body.toString();
+      const json = JSON.parse(imageJsonResult.Body.toString());
 
-      // Create object based on results of JSON
-      resolve(resultJson);
+      resolve(json);
     } catch (e) {
       reject(e);
     }

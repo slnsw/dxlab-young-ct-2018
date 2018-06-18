@@ -62,11 +62,14 @@ describe("functions", async () => {
     expect(result.length).toBe(2);
   });
 
-  it("should return image with metadata", async () => {
+  it("should return metadata for a specific image", async () => {
     const imageName = "hood_00101r.jpg";
     const result = await functions.image(mockBucket, imageName);
 
-    expect("image" in result).toBe(true);
-    expect("metadata" in result).toBe(true);
+    expect(result.FaceRecords[0].Face.FaceId).toBe(
+      "c6d6cab5-e730-4b99-a294-12cb9d3f6efb"
+    );
+    expect(result.FaceRecords.length).toBe(1);
+    expect(typeof result.FaceRecords === "object").toBe(true);
   });
 });
