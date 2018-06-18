@@ -23,5 +23,17 @@ functions:
     handler: handler.images
     events:
       - http:
+          integration: lambda
           path: images
           method: get
+  image:
+    handler: handler.image
+    events:
+      - http:
+          integration: lambda
+          path: images/{filename}
+          method: get
+          request:
+            paramaters:
+              paths:
+                filename: true

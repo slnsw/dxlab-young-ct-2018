@@ -63,11 +63,8 @@ describe("functions", async () => {
   });
 
   it("should return image with metadata", async () => {
-    const request = {
-      bucket: mockBucket,
-      image: "hood_00101r.jpg"
-    };
-    const result = await functions.image(request);
+    const imageName = "hood_00101r.jpg";
+    const result = await functions.image(mockBucket, imageName);
 
     expect("image" in result).toBe(true);
     expect("metadata" in result).toBe(true);

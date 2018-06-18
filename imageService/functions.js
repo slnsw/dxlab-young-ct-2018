@@ -28,22 +28,22 @@ async function images(bucketName) {
   });
 }
 
-async function image(request) {
+async function image(bucketName, imageName) {
   return new Promise(async (resolve, reject) => {
     try {
       // Do an S3 request looking for image and corresponding JSON file
       const getImageBlobParams = {
-        Bucket: request.bucket,
-        Key: request.image
+        Bucket: bucketName,
+        Key: imageName
       };
 
       const imageResult = await s3.getObject(getImageBlobParams).promise();
 
       // Replace image file extension with json extension to retrieve
       // the image's metadata.
-      const imageJson = request.image.replace(/\.[^/.]+$/, "") + ".json";
+      const imageJson = imageName.replace(/\.[^/.]+$/, "") + ".json";
       const getImageJsonParams = {
-        Bucket: request.bucket,
+        Bucket: bucketName,
         Key: imageJson
       };
 
