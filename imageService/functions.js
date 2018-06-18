@@ -39,6 +39,8 @@ async function image(request) {
 
       const imageResult = await s3.getObject(getImageBlobParams).promise();
 
+      // Replace image file extension with json extension to retrieve
+      // the image's metadata.
       const imageJson = request.image.replace(/\.[^/.]+$/, "") + ".json";
       const getImageJsonParams = {
         Bucket: request.bucket,
