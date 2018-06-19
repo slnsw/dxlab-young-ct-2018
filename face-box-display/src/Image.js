@@ -15,7 +15,6 @@ class Image extends Component {
   render() {
     const currentIndex = this.props.imageList.indexOf(this.props.imageName);
 
-    const faceList = this.state.faces;
     return (
       <React.Fragment>
         <h1>{this.props.imageName}</h1>
