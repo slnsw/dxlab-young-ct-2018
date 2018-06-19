@@ -69,7 +69,7 @@ class Image extends Component {
                     height: `${face.Face.BoundingBox.Height * 100}%`,
                     borderStyle: "solid",
                     borderWidth: "3px",
-                    borderColor: "blue"
+                    borderColor: "lightgreen"
                   }}
                 />
               );
