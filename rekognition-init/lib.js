@@ -14,8 +14,9 @@ async function imageList(bucketName) {
     var imageNameArray = [];
     // Create an array of image names
     for (var i = 0; i < promiseResult.Contents.length; i++) {
-      // To do: Check if the object name contains .jpeg or .png
-      imageNameArray.push(promiseResult.Contents[i].Key);
+      if (promiseResult.Contents[i].Key.match(/.(jpg|jpeg|png)$/i)) {
+        imageNameArray.push(promiseResult.Contents[i].Key);
+      }
     }
     return imageNameArray;
   } catch (e) {
@@ -31,12 +32,11 @@ async function checkFaceCollectionExists(faceCollectionName) {
     if (result.CollectionIds.length === 0) {
       return false;
     }
-    for (var i = 0; i < result.CollectionIds.Length; i++) {
+    for (var i = 0; i < result.CollectionIds.length; i++) {
       if (result.CollectionIds[i] == faceCollectionName) {
         return true;
       }
     }
-
     return false;
   } catch (e) {
     console.log(e);
