@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Image from "./Image";
 import "./App.css";
+import "./gallery.css";
 
 class App extends Component {
   state = { images: [] };
@@ -24,6 +25,7 @@ class App extends Component {
             return (
               <a href={`?image=${image}`} key={image}>
                 <img
+                  className="thumbnail"
                   src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${image}`}
                 />
               </a>
