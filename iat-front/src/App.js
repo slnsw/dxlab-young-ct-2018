@@ -21,16 +21,19 @@ class App extends Component {
         {imageName ? (
           <Image imageList={this.state.imageList} imageName={imageName} />
         ) : (
-          this.state.imageList.map(image => {
-            return (
-              <a href={`?image=${image}`} key={image}>
-                <img
-                  className="thumbnail"
-                  src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${image}`}
-                />
-              </a>
-            );
-          })
+          <React.Fragment>
+            <h1>Image gallery</h1>
+            {this.state.imageList.map(image => {
+              return (
+                <a href={`?image=${image}`} key={image}>
+                  <img
+                    className="thumbnail"
+                    src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${image}`}
+                  />
+                </a>
+              );
+            })}{" "}
+          </React.Fragment>
         )}
       </div>
     );
