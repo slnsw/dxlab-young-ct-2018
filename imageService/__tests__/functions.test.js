@@ -76,8 +76,18 @@ describe("functions", async () => {
   });
 
   it("should search faces that are similar in other images", async () => {
-    // Need to ensure that images are uploaded, and have the image analysis
-    // results stored in AWS Rekognition. Perhaps try running the script
-    // with the mock bucket?
+    // Get a Face ID, do this by getting the first face in the collection
+    var getFaceParams = {
+      CollectionId: mockCollection,
+      MaxResults: 1
+    };
+
+    const faces = await rekognition.listFaces(getFaceParams).promise();
+    const faceId = faces.Faces[0].FaceId;
+
+    // Search for FaceID with the appropriate function call
+    const result = await functions.searchFaces(mockCollection, faceId);
+
+    expect(result.FaceMatches.length).toBe(0);
   });
 });

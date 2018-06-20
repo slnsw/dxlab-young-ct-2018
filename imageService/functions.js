@@ -2,6 +2,7 @@
 var AWS = require("aws-sdk");
 AWS.config.update({ region: "ap-southeast-2" });
 var s3 = new AWS.S3({ apiVersion: "2006-03-01" });
+var rekognition = new AWS.Rekognition();
 
 async function images(bucketName) {
   return new Promise(async (resolve, reject) => {
@@ -50,7 +51,26 @@ async function image(bucketName, imageName) {
   });
 }
 
+async function searchFaces(collectionId, faceId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const params = {
+        CollectionId: collectionId,
+        FaceId: faceId,
+        FaceMatchThreshold: 95
+      };
+
+      const result = rekognition.searchFaces(params).promise();
+
+      resolve(result);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 module.exports = {
   images,
-  image
+  image,
+  searchFaces
 };
