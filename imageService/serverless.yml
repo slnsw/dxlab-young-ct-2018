@@ -13,10 +13,10 @@ provider:
      Action:
        - s3:*
      Resource: "*"
-    # - Effect: "Allow"
-    #   Action:
-    #     - "rekognition:*"
-    #   Resource: "*"
+   - Effect: "Allow"
+     Action:
+       - "rekognition:*"
+     Resource: "*"
 
 functions:
   images:
@@ -39,3 +39,15 @@ functions:
             paramaters:
               paths:
                 filename: true
+  faceSearch:
+    handler: handler.faceSearch
+    events:
+      - http:
+          integration: lambda
+          path: faceSearch/{faceId}
+          method: get
+          cors: true
+          request:
+            paramaters:
+              paths:
+                faceId: true

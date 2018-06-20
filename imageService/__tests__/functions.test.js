@@ -86,7 +86,7 @@ describe("functions", async () => {
     const faceId = faces.Faces[0].FaceId;
 
     // Search for FaceID with the appropriate function call
-    const result = await functions.searchFaces(mockCollection, faceId);
+    const result = await functions.faceSearch(mockCollection, faceId);
 
     expect(result.FaceMatches.length).toBe(0);
   });

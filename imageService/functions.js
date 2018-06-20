@@ -51,7 +51,7 @@ async function image(bucketName, imageName) {
   });
 }
 
-async function searchFaces(collectionId, faceId) {
+async function faceSearch(collectionId, faceId) {
   return new Promise(async (resolve, reject) => {
     try {
       const params = {
@@ -60,7 +60,7 @@ async function searchFaces(collectionId, faceId) {
         FaceMatchThreshold: 95
       };
 
-      const result = rekognition.searchFaces(params).promise();
+      const result = await rekognition.searchFaces(params).promise();
 
       resolve(result);
     } catch (e) {
@@ -72,5 +72,5 @@ async function searchFaces(collectionId, faceId) {
 module.exports = {
   images,
   image,
-  searchFaces
+  faceSearch
 };
