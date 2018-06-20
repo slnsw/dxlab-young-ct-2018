@@ -2,15 +2,26 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class Image extends Component {
-  state = { faces: {} };
+  state = { faces: {}, matchingFaces: [] };
   async componentDidMount() {
     const { data } = await axios.get(
       `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/images/${
         this.props.imageName
       }`
     );
-    this.setState({ faces: data.body });
-    console.log(this.state.faces);
+
+    let matchingFaces = [];
+    for (const face of data.body.FaceRecords) {
+      const { data } = await axios.get(
+        `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/faceSearch/${
+          face.Face.FaceId
+        }`
+      );
+
+      matchingFaces.push(data.body);
+    }
+
+    this.setState({ faces: data.body, matchingFaces });
   }
   render() {
     const currentIndex = this.props.imageList.indexOf(this.props.imageName);
@@ -56,7 +67,6 @@ class Image extends Component {
           />
           {this.state.faces.FaceRecords ? (
             this.state.faces.FaceRecords.map(face => {
-              console.log(face.Face.BoundingBox.Top);
               return (
                 <div
                   key={face.Face.FaceId}
