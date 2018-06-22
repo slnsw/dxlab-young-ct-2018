@@ -51,3 +51,15 @@ functions:
             paramaters:
               paths:
                 faceId: true
+  getFaces:
+    handler: handler.getFaces
+    events:
+      - http:
+          integration: lambda
+          path: getFaces/{image}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                image: true

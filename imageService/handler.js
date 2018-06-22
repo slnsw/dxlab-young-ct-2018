@@ -67,3 +67,25 @@ module.exports.faceSearch = (event, context, callback) => {
       callback(null, error);
     });
 };
+
+module.exports.getFaces = (event, context, callback) => {
+  return functions
+    .getFaces("samhood", "samhoodfaces", event["path"]["image"])
+    .then(result => {
+      const response = {
+        isBase64Encoded: false,
+        statusCode: 200,
+        headers: {},
+        body: result
+      };
+
+      callback(null, response);
+    })
+    .catch(e => {
+      const error = {
+        statusCode: 501,
+        body: e.message
+      };
+      callback(null, error);
+    });
+};
