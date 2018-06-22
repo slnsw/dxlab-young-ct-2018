@@ -45,17 +45,11 @@ describe("functions", async () => {
     if (!(await imageAnalysisLib.checkFaceCollectionExists(mockCollection))) {
       await imageAnalysisLib.createRekognitionFaceCollection(mockCollection);
       const imageList = await imageAnalysisLib.imageList(mockBucket);
-
-      for (var image of imageList) {
-        const analysisParams = {
-          CollectionId: mockCollection,
-          DetectionAttributes: [],
-          ExternalImageId: image,
-          Image: { S3Object: { Bucket: mockBucket, Name: image } }
-        };
-
-        await rekognition.indexFaces(analysisParams).promise();
-      }
+      const _ = await imageAnalysisLib.indexFacesToCollection(
+        mockCollection,
+        mockBucket,
+        imageList
+      );
     }
   }, 30000);
 
@@ -69,7 +63,7 @@ describe("functions", async () => {
     const result = await functions.image(mockBucket, imageName);
 
     expect(result.FaceRecords[0].Face.FaceId).toBe(
-      "c6d6cab5-e730-4b99-a294-12cb9d3f6efb"
+      "89efbf27-2105-471e-b53e-ab951f9064f8"
     );
     expect(result.FaceRecords.length).toBe(1);
     expect(typeof result.FaceRecords === "object").toBe(true);
@@ -89,5 +83,21 @@ describe("functions", async () => {
     const result = await functions.faceSearch(mockCollection, faceId);
 
     expect(result.FaceMatches.length).toBe(0);
+  });
+
+  it("should return similar faces for all faces in an image", async () => {
+    const mockImage = "hood_00101r.jpg";
+    // Make call to function
+    const result = await functions.getFaces(
+      mockBucket,
+      mockCollection,
+      mockImage
+    );
+
+    // Check the components of the JSON to ensure the structure is matched
+    // Non empty JSON
+    expect(result.faceRecords.length).toBeGreaterThan(0);
+    // Test that field exists
+    expect(result.faceRecords[0].face.matchingFaces.length).toBe(0);
   });
 });

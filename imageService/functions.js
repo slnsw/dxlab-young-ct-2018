@@ -69,8 +69,79 @@ async function faceSearch(collectionId, faceId) {
   });
 }
 
+async function getFaces(bucketName, collectionId, imageName) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const imageJson = imageName.replace(/\.[^/.]+$/, "") + ".json";
+
+      const facesInImageParams = {
+        Bucket: bucketName,
+        Key: imageJson
+      };
+
+      // Run script to make the object keys lowercase
+      const analysisResult = await s3.getObject(facesInImageParams).promise();
+      var json = JSON.parse(analysisResult.Body.toString());
+
+      // Convert everything over to camelCase
+      json = toCamel(json);
+
+      // Loop through the faces to search with the individual faceId
+      // and append a matchingFaces object to the face
+      // To do: set this up to be done in parallel
+      for (const faceRecord of json.faceRecords) {
+        const faceSearchParams = {
+          CollectionId: collectionId,
+          FaceId: faceRecord.face.faceId,
+          FaceMatchThreshold: 95
+        };
+
+        const faceSearchResults = await rekognition
+          .searchFaces(faceSearchParams)
+          .promise();
+      }
+
+      // Return promise object
+      resolve(json);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+function toCamel(o) {
+  var newO, origKey, newKey, value;
+  if (o instanceof Array) {
+    return o.map(function(value) {
+      if (typeof value === "object") {
+        value = toCamel(value);
+      }
+      return value;
+    });
+  } else {
+    newO = {};
+    for (origKey in o) {
+      if (o.hasOwnProperty(origKey)) {
+        newKey = (
+          origKey.charAt(0).toLowerCase() + origKey.slice(1) || origKey
+        ).toString();
+        value = o[origKey];
+        if (
+          value instanceof Array ||
+          (value !== null && value.constructor === Object)
+        ) {
+          value = toCamel(value);
+        }
+        newO[newKey] = value;
+      }
+    }
+  }
+  return newO;
+}
+
 module.exports = {
   images,
   image,
-  faceSearch
+  faceSearch,
+  getFaces
 };
