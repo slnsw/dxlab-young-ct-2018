@@ -9,7 +9,6 @@ class Image extends Component {
         this.props.imageName
       }`
     );
-    console.log(data.body);
     this.setState({ faces: data.body });
   }
   render() {
