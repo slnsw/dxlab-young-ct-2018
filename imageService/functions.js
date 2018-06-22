@@ -99,6 +99,8 @@ async function getFaces(bucketName, collectionId, imageName) {
         const faceSearchResults = await rekognition
           .searchFaces(faceSearchParams)
           .promise();
+
+        faceRecord.face.matchingFaces = faceSearchResults.FaceMatches;
       }
 
       // Return promise object
