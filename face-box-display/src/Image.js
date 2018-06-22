@@ -5,23 +5,12 @@ class Image extends Component {
   state = { faces: {}, matchingFaces: [] };
   async componentDidMount() {
     const { data } = await axios.get(
-      `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/images/${
+      `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/getFaces/${
         this.props.imageName
       }`
     );
-
-    let matchingFaces = [];
-    for (const face of data.body.FaceRecords) {
-      const { data } = await axios.get(
-        `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/faceSearch/${
-          face.Face.FaceId
-        }`
-      );
-
-      matchingFaces.push(data.body);
-    }
-
-    this.setState({ faces: data.body, matchingFaces });
+    console.log(data.body);
+    this.setState({ faces: data.body });
   }
   render() {
     const currentIndex = this.props.imageList.indexOf(this.props.imageName);
@@ -65,22 +54,42 @@ class Image extends Component {
               this.props.imageName
             }`}
           />
-          {this.state.faces.FaceRecords ? (
-            this.state.faces.FaceRecords.map(face => {
+          {this.state.faces.faceRecords ? (
+            this.state.faces.faceRecords.map(face => {
               return (
-                <div
-                  key={face.Face.FaceId}
-                  style={{
-                    position: "absolute",
-                    top: `${face.Face.BoundingBox.Top * 100}%`,
-                    left: `${face.Face.BoundingBox.Left * 100}%`,
-                    width: `${face.Face.BoundingBox.Width * 100}%`,
-                    height: `${face.Face.BoundingBox.Height * 100}%`,
-                    borderStyle: "solid",
-                    borderWidth: "3px",
-                    borderColor: "lightgreen"
-                  }}
-                />
+                <React.Fragment>
+                  {face.face.matchingFaces.length > 0 ? (
+                    <a href="">
+                      <div
+                        key={face.face.faceId}
+                        style={{
+                          position: "absolute",
+                          top: `${face.face.boundingBox.top * 100}%`,
+                          left: `${face.face.boundingBox.left * 100}%`,
+                          width: `${face.face.boundingBox.width * 100}%`,
+                          height: `${face.face.boundingBox.height * 100}%`,
+                          borderStyle: "solid",
+                          borderWidth: "3px",
+                          borderColor: "lightgreen"
+                        }}
+                      />
+                    </a>
+                  ) : (
+                    <div
+                      key={face.face.faceId}
+                      style={{
+                        position: "absolute",
+                        top: `${face.face.boundingBox.top * 100}%`,
+                        left: `${face.face.boundingBox.left * 100}%`,
+                        width: `${face.face.boundingBox.width * 100}%`,
+                        height: `${face.face.boundingBox.height * 100}%`,
+                        borderStyle: "solid",
+                        borderWidth: "3px",
+                        borderColor: "lightgreen"
+                      }}
+                    />
+                  )}
+                </React.Fragment>
               );
             })
           ) : (
