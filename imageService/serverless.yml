@@ -56,10 +56,6 @@ functions:
     events:
       - http:
           integration: lambda
-          path: getFaces/{image}
+          path: getFaces
           method: get
           cors: true
-          request:
-            parameters:
-              paths:
-                image: true

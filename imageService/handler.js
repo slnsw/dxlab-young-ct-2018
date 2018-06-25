@@ -70,7 +70,7 @@ module.exports.faceSearch = (event, context, callback) => {
 
 module.exports.getFaces = (event, context, callback) => {
   return functions
-    .getFaces("samhood", "samhoodfaces", event["path"]["image"])
+    .getFaces("samhood", "samhoodfaces", event["query"]["image"])
     .then(result => {
       const response = {
         isBase64Encoded: false,
