@@ -98,6 +98,6 @@ describe("functions", async () => {
     // Non empty JSON
     expect(result.faceRecords.length).toBeGreaterThan(0);
     // Test that field exists
-    expect(result.faceRecords[0].face.matchingFaces.length).toBe(0);
+    expect(result.faceRecords[0].face.matchingFaces).toBe(null);
   });
 });

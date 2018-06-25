@@ -100,7 +100,9 @@ async function getFaces(bucketName, collectionId, imageName) {
           .searchFaces(faceSearchParams)
           .promise();
 
-        faceRecord.face.matchingFaces = faceSearchResults.FaceMatches;
+        faceSearchResults.FaceMatches.length == 0
+          ? (faceRecord.face.matchingFaces = null)
+          : (faceRecord.face.matchingFaces = faceSearchResults.FaceMatches);
       }
 
       // Return promise object
