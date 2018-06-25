@@ -5,7 +5,7 @@ class Image extends Component {
   state = { faces: {}, matchingFaces: [] };
   async componentDidMount() {
     const { data } = await axios.get(
-      `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/getFaces/${
+      `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/getFaces?image=${
         this.props.imageName
       }`
     );
@@ -57,7 +57,7 @@ class Image extends Component {
             this.state.faces.faceRecords.map(face => {
               return (
                 <React.Fragment>
-                  {face.face.matchingFaces.length > 0 ? (
+                  {face.face.matchingFaces != null ? (
                     <a href="">
                       <div
                         key={face.face.faceId}
