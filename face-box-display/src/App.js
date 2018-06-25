@@ -29,6 +29,7 @@ class App extends Component {
                   <img
                     className="thumbnail"
                     src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${image}`}
+                    alt={image}
                   />
                 </a>
               );

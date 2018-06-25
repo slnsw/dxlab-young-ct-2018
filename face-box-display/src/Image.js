@@ -52,13 +52,14 @@ class Image extends Component {
             src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${
               this.props.imageName
             }`}
+            alt={this.props.imageName}
           />
           {this.state.faces.faceRecords ? (
             this.state.faces.faceRecords.map(face => {
               return (
-                <React.Fragment>
+                <React.Fragment key={face.face.faceId}>
                   {face.face.matchingFaces != null ? (
-                    <a href="">
+                    <a href={`?image=${this.props.imageName}`}>
                       <div
                         key={face.face.faceId}
                         style={{
@@ -69,7 +70,7 @@ class Image extends Component {
                           height: `${face.face.boundingBox.height * 100}%`,
                           borderStyle: "solid",
                           borderWidth: "3px",
-                          borderColor: "lightgreen"
+                          borderColor: "blue"
                         }}
                       />
                     </a>
