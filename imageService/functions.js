@@ -102,7 +102,9 @@ async function getFaces(bucketName, collectionId, imageName) {
 
         faceSearchResults.FaceMatches.length == 0
           ? (faceRecord.face.matchingFaces = null)
-          : (faceRecord.face.matchingFaces = faceSearchResults.FaceMatches);
+          : (faceRecord.face.matchingFaces = toCamel(
+              faceSearchResults.FaceMatches
+            ));
       }
 
       // Return promise object
