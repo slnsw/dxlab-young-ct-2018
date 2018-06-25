@@ -67,19 +67,35 @@ class Image extends Component {
                         face.face.faceId
                       }`}
                     >
-                      <div
-                        key={face.face.faceId}
-                        style={{
-                          position: "absolute",
-                          top: `${face.face.boundingBox.top * 100}%`,
-                          left: `${face.face.boundingBox.left * 100}%`,
-                          width: `${face.face.boundingBox.width * 100}%`,
-                          height: `${face.face.boundingBox.height * 100}%`,
-                          borderStyle: "solid",
-                          borderWidth: "3px",
-                          borderColor: "blue"
-                        }}
-                      />
+                      {faceId && face.face.faceId === faceId ? (
+                        <div
+                          key={face.face.faceId}
+                          style={{
+                            position: "absolute",
+                            top: `${face.face.boundingBox.top * 100}%`,
+                            left: `${face.face.boundingBox.left * 100}%`,
+                            width: `${face.face.boundingBox.width * 100}%`,
+                            height: `${face.face.boundingBox.height * 100}%`,
+                            borderStyle: "solid",
+                            borderWidth: "3px",
+                            borderColor: "red"
+                          }}
+                        />
+                      ) : (
+                        <div
+                          key={face.face.faceId}
+                          style={{
+                            position: "absolute",
+                            top: `${face.face.boundingBox.top * 100}%`,
+                            left: `${face.face.boundingBox.left * 100}%`,
+                            width: `${face.face.boundingBox.width * 100}%`,
+                            height: `${face.face.boundingBox.height * 100}%`,
+                            borderStyle: "solid",
+                            borderWidth: "3px",
+                            borderColor: "blue"
+                          }}
+                        />
+                      )}
                     </a>
                   ) : (
                     <div
@@ -111,7 +127,6 @@ class Image extends Component {
               })
               .map(face => {
                 return face.face.matchingFaces.map(matchingFace => {
-                  console.log(matchingFace);
                   return (
                     <React.Fragment>
                       <div
@@ -126,6 +141,23 @@ class Image extends Component {
                             matchingFace.face.externalImageId
                           }`}
                         />
+                        <div
+                          key={matchingFace.face.faceId}
+                          style={{
+                            position: "absolute",
+                            top: `${matchingFace.face.boundingBox.top * 100}%`,
+                            left: `${matchingFace.face.boundingBox.left *
+                              100}%`,
+                            width: `${matchingFace.face.boundingBox.width *
+                              100}%`,
+                            height: `${matchingFace.face.boundingBox.height *
+                              100}%`,
+                            borderStyle: "solid",
+                            borderWidth: "3px",
+                            borderColor: "red"
+                          }}
+                        />
+                        <div />
                       </div>;
                     </React.Fragment>
                   );
