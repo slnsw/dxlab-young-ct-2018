@@ -14,7 +14,9 @@ class App extends Component {
     this.setState({ imageList: data.body });
   }
   render() {
-    const imageName = window.location.search.replace("?image=", "");
+    const urlString = window.location;
+    const url = new URL(urlString);
+    const imageName = url.searchParams.get("image");
 
     return (
       <div className="App">

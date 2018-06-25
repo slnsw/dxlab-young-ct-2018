@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class Image extends Component {
-  state = { faces: {}, matchingFaces: [] };
+  state = { faces: null, matchingFaces: [] };
   async componentDidMount() {
     const { data } = await axios.get(
       `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/getFaces?image=${
@@ -13,6 +13,9 @@ class Image extends Component {
   }
   render() {
     const currentIndex = this.props.imageList.indexOf(this.props.imageName);
+    const urlString = window.location;
+    const url = new URL(urlString);
+    const faceId = url.searchParams.get("faceId");
 
     return (
       <React.Fragment>
@@ -54,12 +57,16 @@ class Image extends Component {
             }`}
             alt={this.props.imageName}
           />
-          {this.state.faces.faceRecords ? (
+          {this.state.faces && this.state.faces.faceRecords ? (
             this.state.faces.faceRecords.map(face => {
               return (
                 <React.Fragment key={face.face.faceId}>
                   {face.face.matchingFaces != null ? (
-                    <a href={`?image=${this.props.imageName}`}>
+                    <a
+                      href={`?image=${this.props.imageName}&faceId=${
+                        face.face.faceId
+                      }`}
+                    >
                       <div
                         key={face.face.faceId}
                         style={{
@@ -96,6 +103,35 @@ class Image extends Component {
             <div />
           )}
         </div>
+
+        {faceId !== null && this.state.faces !== null
+          ? this.state.faces.faceRecords
+              .filter(face => {
+                return face.face.faceId === faceId;
+              })
+              .map(face => {
+                return face.face.matchingFaces.map(matchingFace => {
+                  console.log(matchingFace);
+                  return (
+                    <React.Fragment>
+                      <div
+                        style={{
+                          position: "relative",
+                          display: "inline-block"
+                        }}
+                      >
+                        <img
+                          alt={matchingFace.face.externalImageId}
+                          src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${
+                            matchingFace.face.externalImageId
+                          }`}
+                        />
+                      </div>;
+                    </React.Fragment>
+                  );
+                });
+              })
+          : ""}
       </React.Fragment>
     );
   }
