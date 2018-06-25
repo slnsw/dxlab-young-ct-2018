@@ -129,6 +129,7 @@ class Image extends Component {
                 return face.face.matchingFaces.map(matchingFace => {
                   return (
                     <React.Fragment>
+                      <h2>{matchingFace.face.externalImageId}</h2>
                       <div
                         style={{
                           position: "relative",
@@ -158,7 +159,7 @@ class Image extends Component {
                           }}
                         />
                         <div />
-                      </div>;
+                      </div>
                     </React.Fragment>
                   );
                 });
