@@ -42,7 +42,7 @@ async function image(bucketName, imageName) {
 
       const imageJsonResult = await s3.getObject(getImageJsonParams).promise();
 
-      const json = JSON.parse(imageJsonResult.Body.toString());
+      const json = toCamel(JSON.parse(imageJsonResult.Body.toString()));
 
       resolve(json);
     } catch (e) {

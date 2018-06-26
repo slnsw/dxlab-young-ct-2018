@@ -62,11 +62,11 @@ describe("functions", async () => {
     const imageName = "hood_00101r.jpg";
     const result = await functions.image(mockBucket, imageName);
 
-    expect(result.FaceRecords[0].Face.FaceId).toBe(
+    expect(result.faceRecords[0].face.faceId).toBe(
       "89efbf27-2105-471e-b53e-ab951f9064f8"
     );
-    expect(result.FaceRecords.length).toBe(1);
-    expect(typeof result.FaceRecords === "object").toBe(true);
+    expect(result.faceRecords.length).toBe(1);
+    expect(typeof result.faceRecords === "object").toBe(true);
   });
 
   it("should search faces that are similar in other images", async () => {
