@@ -78,7 +78,7 @@ class Image extends Component {
                             height: `${face.face.boundingBox.height * 100}%`,
                             borderStyle: "solid",
                             borderWidth: "3px",
-                            borderColor: "red"
+                            borderColor: "#e6007e"
                           }}
                         />
                       ) : (
@@ -92,7 +92,7 @@ class Image extends Component {
                             height: `${face.face.boundingBox.height * 100}%`,
                             borderStyle: "solid",
                             borderWidth: "3px",
-                            borderColor: "blue"
+                            borderColor: "#1300e6"
                           }}
                         />
                       )}
@@ -108,7 +108,7 @@ class Image extends Component {
                         height: `${face.face.boundingBox.height * 100}%`,
                         borderStyle: "solid",
                         borderWidth: "3px",
-                        borderColor: "lightgreen"
+                        borderColor: "#8cca3a"
                       }}
                     />
                   )}
@@ -161,7 +161,7 @@ class Image extends Component {
                               100}%`,
                             borderStyle: "solid",
                             borderWidth: "3px",
-                            borderColor: "red"
+                            borderColor: "#e6007e"
                           }}
                         />
                       </div>

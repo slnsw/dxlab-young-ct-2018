@@ -2,6 +2,21 @@
   text-align: center;
 }
 
+body {
+  font-family: Lekton;
+  background-color: #060606;
+  color: #e6e6e6;
+}
+
+a:link,
+a:visited {
+  color: #e6007e;
+}
+
+img {
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .App-header {
   background-color: #222;
   height: 150px;
