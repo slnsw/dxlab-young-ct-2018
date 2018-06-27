@@ -10,43 +10,6 @@ class Image extends Component {
       }`
     );
     this.setState({ faces: data.body });
-
-    // if faceId is set in the query string, do an async call
-    // and set the state
-    const urlString = window.location;
-    const url = new URL(urlString);
-    const faceId = url.searchParams.get("faceId");
-
-    // Data structures required:
-    // - List of external images to load, with URLs
-    // - List of faces for each image
-    //
-
-    // If faceId is not null, then create a new data structure
-    if (faceId !== null) {
-      // Get matching faces for a faceId. This is used for matching
-      const { data } = await axios.get(
-        `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/faceSearch/${faceId}`
-      );
-      var matchingFaces = await Promise.all(
-        data.body.FaceMatches.map(async face => {
-          const url = `https://s3-ap-southeast-2.amazonaws.com/samhood/${
-            face.Face.ExternalImageId
-          }`;
-          const { data } = await axios.get(
-            `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/images/${
-              face.Face.ExternalImageId
-            }`
-          );
-          const faces = data.body;
-          return {
-            name: face.Face.ExternalImageId,
-            url,
-            faces
-          };
-        })
-      );
-    }
   }
   render() {
     const currentIndex = this.props.imageList.indexOf(this.props.imageName);
