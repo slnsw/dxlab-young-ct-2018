@@ -21,7 +21,11 @@ class App extends Component {
     return (
       <div className="App">
         {imageName ? (
-          <Image imageList={this.state.imageList} imageName={imageName} />
+          <Image
+            key={imageName}
+            imageList={this.state.imageList}
+            imageName={imageName}
+          />
         ) : (
           <React.Fragment>
             <h1>Image gallery</h1>

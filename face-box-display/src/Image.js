@@ -128,9 +128,10 @@ class Image extends Component {
               .map(face => {
                 return face.face.matchingFaces.map(matchingFace => {
                   return (
-                    <React.Fragment>
+                    <React.Fragment key={matchingFace.face.externalImageId}>
                       <h2>{matchingFace.face.externalImageId}</h2>
                       <div
+                        key={matchingFace.face.externalImageId}
                         style={{
                           position: "relative",
                           display: "inline-block"
@@ -141,6 +142,7 @@ class Image extends Component {
                           src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${
                             matchingFace.face.externalImageId
                           }`}
+                          key={matchingFace.face.externalImageId}
                         />
                         <div
                           key={matchingFace.face.faceId}
