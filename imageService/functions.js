@@ -29,46 +29,6 @@ async function images(bucketName) {
   });
 }
 
-async function image(bucketName, imageName) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      // Replace image file extension with json extension to retrieve
-      // the image's metadata.
-      const imageJson = imageName.replace(/\.[^/.]+$/, "") + ".json";
-      const getImageJsonParams = {
-        Bucket: bucketName,
-        Key: imageJson
-      };
-
-      const imageJsonResult = await s3.getObject(getImageJsonParams).promise();
-
-      const json = toCamel(JSON.parse(imageJsonResult.Body.toString()));
-
-      resolve(json);
-    } catch (e) {
-      reject(e);
-    }
-  });
-}
-
-async function faceSearch(collectionId, faceId) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const params = {
-        CollectionId: collectionId,
-        FaceId: faceId,
-        FaceMatchThreshold: 95
-      };
-
-      const result = await rekognition.searchFaces(params).promise();
-
-      resolve(result);
-    } catch (e) {
-      reject(e);
-    }
-  });
-}
-
 async function getFaces(bucketName, collectionId, imageName) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -147,7 +107,5 @@ function toCamel(o) {
 
 module.exports = {
   images,
-  image,
-  faceSearch,
   getFaces
 };

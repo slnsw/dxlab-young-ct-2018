@@ -121,13 +121,7 @@ class Image extends Component {
         </div>
 
         {faceId !== null && this.state.faces !== null
-          ? // Need list of external image ids. We can get these via map and filter
-            // Make call to image endpoint
-
-            // Loop through data structure for each image, if the external
-            // image ID matches up then make the image box red instead
-
-            this.state.faces.faceRecords
+          ? this.state.faces.faceRecords
               .filter(face => {
                 return face.face.faceId === faceId;
               })

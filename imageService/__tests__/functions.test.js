@@ -58,33 +58,6 @@ describe("functions", async () => {
     expect(result.length).toBe(10);
   });
 
-  it("should return metadata for a specific image", async () => {
-    const imageName = "hood_00101r.jpg";
-    const result = await functions.image(mockBucket, imageName);
-
-    expect(result.faceRecords[0].face.faceId).toBe(
-      "89efbf27-2105-471e-b53e-ab951f9064f8"
-    );
-    expect(result.faceRecords.length).toBe(1);
-    expect(typeof result.faceRecords === "object").toBe(true);
-  });
-
-  it("should search faces that are similar in other images", async () => {
-    // Get a Face ID, do this by getting the first face in the collection
-    var getFaceParams = {
-      CollectionId: mockCollection,
-      MaxResults: 1
-    };
-
-    const faces = await rekognition.listFaces(getFaceParams).promise();
-    const faceId = faces.Faces[0].FaceId;
-
-    // Search for FaceID with the appropriate function call
-    const result = await functions.faceSearch(mockCollection, faceId);
-
-    expect(result.FaceMatches.length).toBe(0);
-  });
-
   it("should return similar faces for all faces in an image", async () => {
     const mockImage = "hood_00101r.jpg";
     // Make call to function
