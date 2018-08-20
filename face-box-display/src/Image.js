@@ -21,7 +21,7 @@ class Image extends Component {
       <React.Fragment>
         <h1>{this.props.imageName}</h1>
         <p>
-          <a href="/">Return to index page</a>
+          <a href="./">Return to index page</a>
         </p>
         <p>
           <a

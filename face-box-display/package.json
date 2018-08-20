@@ -9,11 +9,14 @@
     "react-scripts": "1.1.1",
     "serve": "^9.2.0"
   },
+  "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
     "now-start": "serve --single ./build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy-staging": "npm run build && ./deploy/ansible-playbook.sh ./deploy/deploy.yml --extra-vars \"stage=staging\" -vvvv",
+    "deploy-production": "npm run build && ./deploy/ansible-playbook.sh ./deploy/deploy.yml --extra-vars \"stage=production\" -vvvv"
   }
 }
