@@ -64,3 +64,4 @@ package-lock.json
 .serverless/**
 
 hosts
+.DS_Store
