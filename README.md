@@ -1,4 +1,4 @@
-# dxlab-young-ct-award
+# DX Lab Young Creative Technologist Award 2018
 
 ![screenshot](screenshot.png)
 
