@@ -120,6 +120,8 @@ class Image extends Component {
           )}
         </div>
 
+        <p>Click on blue square to see face matches</p>
+
         {faceId !== null && this.state.faces !== null
           ? this.state.faces.faceRecords
               .filter(face => {

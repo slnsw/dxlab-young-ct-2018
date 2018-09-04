@@ -20,6 +20,10 @@ class App extends Component {
 
     return (
       <div className="App">
+        <p style={{ opacity: "0.5" }}>
+          <strong>Young Creative Technologist Experiment</strong> by Vignesh
+          Sankaran
+        </p>
         {imageName ? (
           <Image
             key={imageName}
@@ -42,6 +46,18 @@ class App extends Component {
             })}{" "}
           </React.Fragment>
         )}
+
+        <footer style={{ margin: "5em" }}>
+          <p>
+            This research is supported through an{" "}
+            <a href="https://dxlab.sl.nsw.gov.au/grants">award</a> offered by
+            the DX Lab. Read the blog post{" "}
+            <a href="https://dxlab.sl.nsw.gov.au/blog/young-cts-facial-recognition-research">
+              here
+            </a>
+            .
+          </p>
+        </footer>
       </div>
     );
   }
