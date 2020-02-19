@@ -1,21 +1,30 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import axios from 'axios';
 
 class Image extends Component {
   state = { faces: null, matchingFaces: [] };
   async componentDidMount() {
+    // const { data } = await axios.get(
+    //   `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/getFaces?image=${this.props.imageName}`
+    // );
+
     const { data } = await axios.get(
-      `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/getFaces?image=${
-        this.props.imageName
-      }`
+      `./data/${this.props.imageName.replace('.jpg', '.json')}`,
+      {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     );
-    this.setState({ faces: data.body });
+
+    this.setState({ faces: toCamel(data) });
   }
   render() {
     const currentIndex = this.props.imageList.indexOf(this.props.imageName);
     const urlString = window.location;
     const url = new URL(urlString);
-    const faceId = url.searchParams.get("faceId");
+    const faceId = url.searchParams.get('faceId');
 
     return (
       <React.Fragment>
@@ -47,14 +56,13 @@ class Image extends Component {
         </p>
         <div
           style={{
-            position: "relative",
-            display: "inline-block"
+            position: 'relative',
+            display: 'inline-block',
           }}
         >
           <img
-            src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${
-              this.props.imageName
-            }`}
+            // src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${this.props.imageName}`}
+            src={`./images/${this.props.imageName}`}
             alt={this.props.imageName}
           />
           {this.state.faces && this.state.faces.faceRecords ? (
@@ -63,36 +71,34 @@ class Image extends Component {
                 <React.Fragment key={face.face.faceId}>
                   {face.face.matchingFaces != null ? (
                     <a
-                      href={`?image=${this.props.imageName}&faceId=${
-                        face.face.faceId
-                      }`}
+                      href={`?image=${this.props.imageName}&faceId=${face.face.faceId}`}
                     >
                       {faceId && face.face.faceId === faceId ? (
                         <div
                           key={face.face.faceId}
                           style={{
-                            position: "absolute",
+                            position: 'absolute',
                             top: `${face.face.boundingBox.top * 100}%`,
                             left: `${face.face.boundingBox.left * 100}%`,
                             width: `${face.face.boundingBox.width * 100}%`,
                             height: `${face.face.boundingBox.height * 100}%`,
-                            borderStyle: "solid",
-                            borderWidth: "3px",
-                            borderColor: "#e6007e"
+                            borderStyle: 'solid',
+                            borderWidth: '3px',
+                            borderColor: '#e6007e',
                           }}
                         />
                       ) : (
                         <div
                           key={face.face.faceId}
                           style={{
-                            position: "absolute",
+                            position: 'absolute',
                             top: `${face.face.boundingBox.top * 100}%`,
                             left: `${face.face.boundingBox.left * 100}%`,
                             width: `${face.face.boundingBox.width * 100}%`,
                             height: `${face.face.boundingBox.height * 100}%`,
-                            borderStyle: "solid",
-                            borderWidth: "3px",
-                            borderColor: "#1300e6"
+                            borderStyle: 'solid',
+                            borderWidth: '3px',
+                            borderColor: '#1300e6',
                           }}
                         />
                       )}
@@ -101,14 +107,14 @@ class Image extends Component {
                     <div
                       key={face.face.faceId}
                       style={{
-                        position: "absolute",
+                        position: 'absolute',
                         top: `${face.face.boundingBox.top * 100}%`,
                         left: `${face.face.boundingBox.left * 100}%`,
                         width: `${face.face.boundingBox.width * 100}%`,
                         height: `${face.face.boundingBox.height * 100}%`,
-                        borderStyle: "solid",
-                        borderWidth: "3px",
-                        borderColor: "#8cca3a"
+                        borderStyle: 'solid',
+                        borderWidth: '3px',
+                        borderColor: '#8cca3a',
                       }}
                     />
                   )}
@@ -135,21 +141,19 @@ class Image extends Component {
                       <div
                         key={matchingFace.face.externalImageId}
                         style={{
-                          position: "relative",
-                          display: "inline-block"
+                          position: 'relative',
+                          display: 'inline-block',
                         }}
                       >
                         <img
                           alt={matchingFace.face.externalImageId}
-                          src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${
-                            matchingFace.face.externalImageId
-                          }`}
+                          src={`https://s3-ap-southeast-2.amazonaws.com/samhood/${matchingFace.face.externalImageId}`}
                           key={matchingFace.face.externalImageId}
                         />
                         <div
                           key={matchingFace.face.faceId}
                           style={{
-                            position: "absolute",
+                            position: 'absolute',
                             top: `${matchingFace.face.boundingBox.top * 100}%`,
                             left: `${matchingFace.face.boundingBox.left *
                               100}%`,
@@ -157,9 +161,9 @@ class Image extends Component {
                               100}%`,
                             height: `${matchingFace.face.boundingBox.height *
                               100}%`,
-                            borderStyle: "solid",
-                            borderWidth: "3px",
-                            borderColor: "#e6007e"
+                            borderStyle: 'solid',
+                            borderWidth: '3px',
+                            borderColor: '#e6007e',
                           }}
                         />
                       </div>
@@ -167,10 +171,40 @@ class Image extends Component {
                   );
                 });
               })
-          : ""}
+          : ''}
       </React.Fragment>
     );
   }
+}
+
+function toCamel(o) {
+  var newO, origKey, newKey, value;
+  if (o instanceof Array) {
+    return o.map(function(value) {
+      if (typeof value === 'object') {
+        value = toCamel(value);
+      }
+      return value;
+    });
+  } else {
+    newO = {};
+    for (origKey in o) {
+      if (o.hasOwnProperty(origKey)) {
+        newKey = (
+          origKey.charAt(0).toLowerCase() + origKey.slice(1) || origKey
+        ).toString();
+        value = o[origKey];
+        if (
+          value instanceof Array ||
+          (value !== null && value.constructor === Object)
+        ) {
+          value = toCamel(value);
+        }
+        newO[newKey] = value;
+      }
+    }
+  }
+  return newO;
 }
 
 export default Image;
