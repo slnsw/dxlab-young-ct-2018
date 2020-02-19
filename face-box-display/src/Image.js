@@ -7,18 +7,11 @@ class Image extends Component {
     // const { data } = await axios.get(
     //   `https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/getFaces?image=${this.props.imageName}`
     // );
-
     const { data } = await axios.get(
-      `./data/${this.props.imageName.replace('.jpg', '.json')}`,
-      {},
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
+      `https://ykm38gkqha.execute-api.ap-southeast-2.amazonaws.com/dev/getFaces?image=${this.props.imageName}`
     );
 
-    this.setState({ faces: toCamel(data) });
+    this.setState({ faces: data.body });
   }
   render() {
     const currentIndex = this.props.imageList.indexOf(this.props.imageName);
@@ -175,36 +168,6 @@ class Image extends Component {
       </React.Fragment>
     );
   }
-}
-
-function toCamel(o) {
-  var newO, origKey, newKey, value;
-  if (o instanceof Array) {
-    return o.map(function(value) {
-      if (typeof value === 'object') {
-        value = toCamel(value);
-      }
-      return value;
-    });
-  } else {
-    newO = {};
-    for (origKey in o) {
-      if (o.hasOwnProperty(origKey)) {
-        newKey = (
-          origKey.charAt(0).toLowerCase() + origKey.slice(1) || origKey
-        ).toString();
-        value = o[origKey];
-        if (
-          value instanceof Array ||
-          (value !== null && value.constructor === Object)
-        ) {
-          value = toCamel(value);
-        }
-        newO[newKey] = value;
-      }
-    }
-  }
-  return newO;
 }
 
 export default Image;

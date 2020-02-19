@@ -11,7 +11,9 @@ class App extends Component {
     // const { data } = await axios.get(
     //   'https://oc958ljit3.execute-api.ap-southeast-2.amazonaws.com/dev/images'
     // );
-    const { data } = await axios.get('./data/images.json');
+    const { data } = await axios.get(
+      'https://ykm38gkqha.execute-api.ap-southeast-2.amazonaws.com/dev/images'
+    );
 
     this.setState({ imageList: data.body });
   }
