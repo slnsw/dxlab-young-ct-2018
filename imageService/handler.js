@@ -2,6 +2,7 @@
 
 const functions = require('./functions');
 
+// Previous bucket name
 // const bucket = "samhood";
 const bucket = 'dxlab-young-ct-2018-assets';
 
